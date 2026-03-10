@@ -14,6 +14,11 @@ font = ExtResource("2_v4doc")
 font_size = 20
 font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_0dbo7"]
+font = ExtResource("2_v4doc")
+font_size = 25
+font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_v4doc"]
 font = ExtResource("2_v4doc")
 font_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
@@ -26,6 +31,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ivrsj")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1530984882]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.45840502, 0.45840508, 0.45840502, 1)
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=1459597975]
 oversampling_override = 1.0
@@ -45,7 +59,8 @@ deleting_enabled = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 36.0
+offset_top = 6.0
+offset_bottom = 42.0
 grow_horizontal = 2
 text = "LCE Loader Installer"
 label_settings = SubResource("LabelSettings_ckeqm")
@@ -86,13 +101,44 @@ metadata/_edit_use_anchors_ = true
 [node name="Install" type="Button" parent="." unique_id=1780881180]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.354
-anchor_top = 0.633
-anchor_right = 0.646
-anchor_bottom = 0.695
+anchor_left = 0.348
+anchor_top = 0.601
+anchor_right = 0.652
+anchor_bottom = 0.663
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_v4doc")
 text = "Install LCE Loader"
+metadata/_edit_use_anchors_ = true
+
+[node name="openafterinstall" type="CheckBox" parent="." unique_id=1216452041]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.186
+anchor_top = 0.68
+anchor_right = 0.814
+anchor_bottom = 0.732
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_v4doc")
+theme_override_font_sizes/font_size = 20
+button_pressed = true
+text = "open LCE Loader after install"
+metadata/_edit_use_anchors_ = true
+
+[node name="Log" type="Label" parent="." unique_id=1347864354]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.772
+anchor_right = 0.99
+anchor_bottom = 0.886
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_0dbo7")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Made By" type="Label" parent="." unique_id=2138047515]
@@ -111,3 +157,4 @@ label_settings = SubResource("LabelSettings_v4doc")
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="button_down" from="Select folder" to="." method="_on_select_folder_button_down"]
 [connection signal="button_down" from="Install" to="." method="_on_install_button_down"]
+[connection signal="toggled" from="openafterinstall" to="." method="_on_openafterinstall_toggled"]

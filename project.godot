@@ -13,6 +13,7 @@ config_version=5
 config/name="LCE Launcher Installer"
 run/main_scene="uid://cdcutyjfxarnj"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/image="uid://cjpfeaweyp83g"
 config/icon="res://icon.svg"
 
 [autoload]
