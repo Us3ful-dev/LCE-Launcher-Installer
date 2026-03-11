@@ -13,10 +13,16 @@ func _ready() -> void:
 		path = OS.get_user_data_dir()
 	
 	if "--isautoupdate" in OS.get_cmdline_args():
+		var pid = OS.get_cmdline_args().find("--isautoupdate") + 1
+		while OS.is_process_running(pid):
+			await get_tree().create_timer(1).timeout
 		remove_file(path + "/LCE-Launcher.exe")
 		remove_file(path + "/LCE-Launcher.pck")
 		Git.extract_zip(path + "/LCE-Launcher.zip", path)
 		DirAccess.remove_absolute(path + "/LCE-Launcher.zip")
+		var npid = OS.create_process(path + "/LCE-Launcher.exe", ["--noupdatecheck"])
+		if npid == -1:
+			printerr("Failed to launch: ", get_parent().filename)
 	else:
 		$Path.text = path
 
@@ -32,14 +38,13 @@ func update_finished():
 		var pid = OS.create_process(path + "/LCE-Launcher.exe", args)
 		if pid == -1:
 			printerr("Failed to launch: ", get_parent().filename)
-	set_log_text("Closing (3)")
-	await get_tree().create_timer(1).timeout
-	set_log_text("Closing (2)")
-	await get_tree().create_timer(1).timeout
-	set_log_text("Closing (1)")
-	await get_tree().create_timer(1).timeout
-	set_log_text("Closing...")
-	get_tree().quit()
+		else:
+			set_log_text("Closing (2)")
+			await get_tree().create_timer(1).timeout
+			set_log_text("Closing (1)")
+			await get_tree().create_timer(1).timeout
+			set_log_text("Closing...")
+			get_tree().quit()
 
 func create_shortcuts():
 	var exepath = path + "/LCE-Launcher.exe"
@@ -76,7 +81,7 @@ func _on_select_folder_button_down() -> void:
 
 func _on_install_button_down() -> void:
 	installing = true
-	make_dirs(["/LCE-Launcher"])
+	make_dirs([""]) # will make dir + "/LCE-Launcher"
 	Git.downloadpath = path
 	Git.install_from_github()
 
